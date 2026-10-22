@@ -1,0 +1,50 @@
+name: Profile from issue
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  profile:
+    if: contains(github.event.issue.labels.*.name, 'profile')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: pip install pyyaml pillow
+
+      - id: profile
+        run: python .github/scripts/profile_from_issue.py
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+
+      - id: pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: profile/${{ steps.profile.outputs.shortname }}
+          title: "Profile: ${{ steps.profile.outputs.name }}"
+          commit-message: "Profile: ${{ steps.profile.outputs.name }}"
+          body: "Closes #${{ github.event.issue.number }}"
+          delete-branch: true
+
+      - if: steps.pr.outputs.pull-request-operation == 'created'
+        run: gh issue comment "$ISSUE" --body "Pull request with your profile: $PR_URL. Edit this issue to update it."
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+          PR_URL: ${{ steps.pr.outputs.pull-request-url }}
+
+      - if: failure() && steps.profile.outputs.error
+        run: gh issue comment "$ISSUE" --body "Could not build the profile: $ERROR Edit this issue to fix it."
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+          ERROR: ${{ steps.profile.outputs.error }}

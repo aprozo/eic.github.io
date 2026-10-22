@@ -2,8 +2,11 @@
   Small links bar shared by the People pages. `here` marks the current one.
 {%- endcomment -%}
 <div class="people-toplinks">
+  <span>
   People:
   {% if include.here == 'all' %}<span class="people-toplink is-current">everyone</span>{% else %}<a class="people-toplink" href="{{ '/people/' | relative_url }}">everyone</a>{% endif %}
   &bull;
   {% if include.here == 'org' %}<span class="people-toplink is-current">organization</span>{% else %}<a class="people-toplink" href="{{ '/people/organization.html' | relative_url }}">organization</a>{% endif %}
+  </span>
+  <a class="btn people-add-btn" href="https://github.com/eic/eic.github.io/issues/new?template=profile.yml" target="_blank" rel="noopener noreferrer">+ Add yourself</a>
 </div>

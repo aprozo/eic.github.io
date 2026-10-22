@@ -72,7 +72,8 @@ layout: default
     <hr>
     <p class="person-foot">
       {%- if p.shortname -%}
-      <a href="https://github.com/eic/eic.github.io/edit/master/_people/{{ p.shortname }}.md" target="_blank" rel="noopener noreferrer">Edit <code>_people/{{ p.shortname }}.md</code></a>
+      <a href="https://github.com/eic/eic.github.io/issues/new?template=profile.yml&name={{ p.name | url_encode }}&shortname={{ p.shortname }}" target="_blank" rel="noopener noreferrer">Update with the form</a>
+      or <a href="https://github.com/eic/eic.github.io/edit/master/_people/{{ p.shortname }}.md" target="_blank" rel="noopener noreferrer">edit <code>_people/{{ p.shortname }}.md</code></a>
       {%- endif -%}
     </p>
 

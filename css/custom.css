@@ -1227,9 +1227,29 @@ tr:nth-child(even) {
 }
 
 .people-toplinks {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
     margin-bottom: 1.5rem;
     color: #868e96;
     font-size: 0.9rem;
+}
+
+.people-add-btn {
+    background-color: var(--site-navbar-gray);
+    border-color: var(--site-navbar-gray);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    transition: filter 0.2s ease;
+}
+
+.people-add-btn:hover,
+.people-add-btn:focus {
+    color: white;
+    filter: brightness(1.25);
 }
 
 .people-toplink.is-current {
