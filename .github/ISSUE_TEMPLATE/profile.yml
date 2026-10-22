@@ -3,25 +3,18 @@ description: Your card on the People page. Submitting opens a pull request with 
 title: "Profile: "
 labels: [profile]
 body:
+  - type: markdown
+    attributes:
+      value: Fields left empty are taken from your GitHub profile (name, company, avatar, bio). Submitting an empty form is fine.
   - type: input
     id: name
     attributes:
       label: Name
       placeholder: Jane Doe
-    validations:
-      required: true
-  - type: input
-    id: shortname
-    attributes:
-      label: Short name
-      description: File name of your profile, lowercase letters, digits and dashes. Defaults to your last name.
-      placeholder: doe
   - type: input
     id: institution
     attributes:
       label: Institution
-    validations:
-      required: true
   - type: input
     id: role
     attributes:
@@ -32,47 +25,15 @@ body:
     id: photo
     attributes:
       label: Photo
-      description: Drag an image here. It is cropped to a square around the center.
-  - type: input
-    id: github
-    attributes:
-      label: GitHub username
-      description: Defaults to the account submitting this form.
-  - type: input
-    id: email
-    attributes:
-      label: Email
-  - type: input
-    id: orcid
-    attributes:
-      label: ORCID
-      placeholder: 0000-0002-1825-0097
-  - type: input
-    id: website
-    attributes:
-      label: Website
-  - type: textarea
-    id: subsystems
-    attributes:
-      label: Detector subsystem roles
-      description: One per line, e.g. "Luminosity DSTC (Pair Spectrometer)".
+      description: Drag an image here. It is cropped to a square around the center. Defaults to your GitHub avatar.
   - type: textarea
     id: about
     attributes:
       label: About
-      description: A paragraph about what you work on. Markdown works.
-  - type: markdown
-    attributes:
-      value: The questions below are optional. Each answer goes on your page under the question.
-  - type: textarea
-    id: question-work
-    attributes:
-      label: What are you working on in ePIC right now?
-  - type: textarea
-    id: question-path
-    attributes:
-      label: How did you end up in nuclear physics?
-  - type: textarea
-    id: question-advice
-    attributes:
-      label: What would you tell someone starting with ePIC software?
+      description: Answer any of the questions below each one, or replace them with your own text. Unanswered questions are dropped.
+      value: |
+        **What are you working on in ePIC right now?**
+
+        **How did you end up in nuclear physics?**
+
+        **What would you tell someone starting with ePIC software?**

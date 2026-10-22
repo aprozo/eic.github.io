@@ -23,6 +23,7 @@ jobs:
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          GITHUB_TOKEN: ${{ github.token }}
 
       - id: pr
         uses: peter-evans/create-pull-request@v7

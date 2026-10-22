@@ -1238,18 +1238,17 @@ tr:nth-child(even) {
 }
 
 .people-add-btn {
-    background-color: var(--site-navbar-gray);
-    border-color: var(--site-navbar-gray);
-    color: white;
+    --bs-btn-color: white;
+    --bs-btn-bg: var(--site-navbar-gray);
+    --bs-btn-border-color: var(--site-navbar-gray);
+    --bs-btn-hover-color: white;
+    --bs-btn-hover-bg: #495057;
+    --bs-btn-hover-border-color: #495057;
+    --bs-btn-active-color: white;
+    --bs-btn-active-bg: #495057;
+    --bs-btn-active-border-color: #495057;
     font-weight: 600;
     padding: 0.5rem 1.25rem;
-    transition: filter 0.2s ease;
-}
-
-.people-add-btn:hover,
-.people-add-btn:focus {
-    color: white;
-    filter: brightness(1.25);
 }
 
 .people-toplink.is-current {
