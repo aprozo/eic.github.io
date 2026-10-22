@@ -34,7 +34,8 @@ jobs:
           delete-branch: true
 
       - if: steps.pr.outputs.pull-request-operation == 'created'
-        run: gh issue comment "$ISSUE" --body "Pull request with your profile: $PR_URL. Edit this issue to update it."
+        run: |
+          gh issue comment "$ISSUE" --body "Pull request with your profile: $PR_URL. Edit this issue to update it."
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -42,7 +43,8 @@ jobs:
           PR_URL: ${{ steps.pr.outputs.pull-request-url }}
 
       - if: failure() && steps.profile.outputs.error
-        run: gh issue comment "$ISSUE" --body "Could not build the profile: $ERROR Edit this issue to fix it."
+        run: |
+          gh issue comment "$ISSUE" --body "Could not build the profile: $ERROR Edit this issue to fix it."
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
