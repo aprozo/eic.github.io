@@ -4,18 +4,15 @@ name: Sasha Prozorov
 shortname: prozorov
 role: User Learning WG convener
 roles:
-  - office: software
-    wg: user-learning
-    kind: convener
-institution: Czech Technical University in Prague
+- office: software
+  wg: user-learning
+  kind: convener
+institution: Czech Technical University
 photo: /assets/images/people/prozorov.jpg
-email: 
 github: aprozo
-orcid:
-website:
+website: https://aprozo.com
 active: true
-# Flip this to true once you have checked your own details above.
-verified: false
+verified: true
 ---
 <!--
   This page is yours. Everything above the line is the card that shows up on the
