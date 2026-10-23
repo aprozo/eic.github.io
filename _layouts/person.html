@@ -59,9 +59,7 @@ layout: default
     {%- if p.verified != true %}
     <p class="person-unverified">
       Starter profile, not confirmed yet.
-      {%- if p.shortname %}
-      <a href="https://github.com/eic/eic.github.io/edit/master/_people/{{ p.shortname }}.md" target="_blank" rel="noopener noreferrer">Edit this page</a>
-      {%- endif %}
+      If this is you, <a href="https://github.com/eic/eic.github.io/issues/new?template=profile.yml&name={{ p.name | url_encode }}" target="_blank" rel="noopener noreferrer">confirm or update it with the form</a>.
     </p>
     {%- endif %}
 
@@ -72,7 +70,7 @@ layout: default
     <hr>
     <p class="person-foot">
       {%- if p.shortname -%}
-      <a href="https://github.com/eic/eic.github.io/issues/new?template=profile.yml&name={{ p.name | url_encode }}" target="_blank" rel="noopener noreferrer">Update with the form</a>
+      <a href="https://github.com/eic/eic.github.io/issues/new?template=profile.yml&name={{ p.name | url_encode }}" target="_blank" rel="noopener noreferrer">Update your own profile with the form</a>
       or <a href="https://github.com/eic/eic.github.io/edit/master/_people/{{ p.shortname }}.md" target="_blank" rel="noopener noreferrer">edit <code>_people/{{ p.shortname }}.md</code></a>
       {%- endif -%}
     </p>

@@ -5,31 +5,35 @@ labels: [profile]
 body:
   - type: markdown
     attributes:
-      value: Fields left empty are taken from your GitHub profile (name, company, avatar, bio). Submitting an empty form is fine.
+      value: |
+        Fill this in for yourself only: the profile is linked to the GitHub account that submits it.
+        Empty fields keep your current values, or for a new profile come from your GitHub profile (name, company, avatar, bio), so an empty form is fine. To remove something, edit your profile file instead.
   - type: input
     id: name
     attributes:
-      label: Name
+      label: Name (optional)
       placeholder: Jane Doe
   - type: input
     id: institution
     attributes:
-      label: Institution
+      label: Institution (optional)
   - type: input
     id: role
     attributes:
-      label: Role
+      label: Role (optional)
       description: One line, shown under your name.
       placeholder: Calorimeter reconstruction
-  - type: textarea
+  - type: upload
     id: photo
     attributes:
-      label: Photo
-      description: Drag an image here. It is cropped to a square around the center. Defaults to your GitHub avatar.
+      label: Photo (optional)
+      description: Cropped to a square around the center. Defaults to your GitHub avatar.
+    validations:
+      accept: ".jpg,.jpeg,.png,.webp"
   - type: textarea
     id: about
     attributes:
-      label: About
+      label: About (optional)
       description: Answer any of the questions below each one, or replace them with your own text. Unanswered questions are dropped.
       value: |
         **What are you working on in ePIC right now?**

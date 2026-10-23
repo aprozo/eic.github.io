@@ -9,10 +9,17 @@ permissions:
   pull-requests: write
   issues: write
 
+concurrency: profile-${{ github.event.issue.user.login }}
+
 jobs:
   profile:
-    if: contains(github.event.issue.labels.*.name, 'profile')
+    if: contains(github.event.issue.labels.*.name, 'profile') && github.event.issue.state == 'open'
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      ISSUE: ${{ github.event.issue.number }}
+      AUTHOR: ${{ github.event.issue.user.login }}
     steps:
       - uses: actions/checkout@v4
 
@@ -28,26 +35,32 @@ jobs:
       - id: pr
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: profile/${{ steps.profile.outputs.shortname }}
+          branch: profile/${{ github.event.issue.user.login }}
           title: "Profile: ${{ steps.profile.outputs.name }}"
           commit-message: "Profile: ${{ steps.profile.outputs.name }}"
-          body: "Closes #${{ github.event.issue.number }}"
+          body: |
+            ${{ steps.profile.outputs.summary }}
+
+            Closes #${{ github.event.issue.number }}
           delete-branch: true
 
-      - if: steps.pr.outputs.pull-request-operation == 'created'
+      - name: Close older profile issues of the same person
         run: |
-          gh issue comment "$ISSUE" --body "Pull request with your profile: $PR_URL. Edit this issue to update it."
+          gh issue list --label profile --author "$AUTHOR" --state open --json number --jq ".[].number | select(. != $ISSUE)" |
+            xargs -r -I{} gh issue close {} --comment "Superseded by #$ISSUE."
+
+      - if: steps.pr.outputs.pull-request-operation == 'created' || steps.pr.outputs.pull-request-operation == 'updated'
+        run: |
+          gh issue comment "$ISSUE" --body "Pull request with your profile: $PR_URL. Edit this issue to change it."
         env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-          ISSUE: ${{ github.event.issue.number }}
           PR_URL: ${{ steps.pr.outputs.pull-request-url }}
+
+      - if: steps.pr.outcome == 'success' && !steps.pr.outputs.pull-request-url
+        run: |
+          gh issue close "$ISSUE" --comment "Nothing to change, the site already has this profile."
 
       - if: failure() && steps.profile.outputs.error
         run: |
           gh issue comment "$ISSUE" --body "Could not build the profile: $ERROR Edit this issue to fix it."
         env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-          ISSUE: ${{ github.event.issue.number }}
           ERROR: ${{ steps.profile.outputs.error }}
